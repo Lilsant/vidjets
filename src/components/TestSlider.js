@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import "./test.css";
 
-export default function TestSlider() {
+export default function TestSlider({ min, max }) {
   const [isChecked, setIsChecked] = useState(true);
   const canvasRef = useRef(0);
   const [settings, setSettings] = useState({
@@ -61,7 +61,7 @@ export default function TestSlider() {
     // 398 386 400 250
     function render() {
       settings.ctx.clearRect(0, 0, settings.width, settings.height);
-      const step = 360 / 40;
+      const step = 360 / (max - min);
       settings.ctx.fillStyle = "black";
       let theta = Math.atan2(
         settings.mouseY -
@@ -124,7 +124,7 @@ export default function TestSlider() {
       settings.ctx.font = "90px Arial";
       settings.ctx.fillStyle = "white";
       settings.ctx.fillText(
-        `${value}°`,
+        `${Math.round(value + min)}°`,
         settings.width / 2,
         settings.height / 2 + 30
       );
@@ -148,12 +148,11 @@ export default function TestSlider() {
       <canvas
         ref={measuredRef}
         className="canvas"
-        onClick={(e) => {
-          console.log(e);
+        onMouseMove={(e) => {
           setSettings((stngs) => ({
             ...stngs,
             mouseX: e.clientX,
-            mouseY: Math.abs(e.target.offsetTop - e.clientY),
+            mouseY: Math.abs(e.pageY - e.target.offsetTop),
           }));
         }}
         onMouseUp={() => setIsChecked(false)}
