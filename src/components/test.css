@@ -1,0 +1,11 @@
+.canvas {
+  width: 500px;
+  height: 500px;
+  background: #26292d;
+  border-radius: 50%;
+  border-right: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-top: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+  background: transparent;
+}
