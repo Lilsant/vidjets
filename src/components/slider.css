@@ -55,7 +55,7 @@
   color: white;
 }
 
-.slider__wrapper {
+/* .slider__wrapper {
   border: 5px solid #fff;
   display: inline-block;
   min-width: 4em;
@@ -64,7 +64,7 @@
   border-radius: 50%;
   border-top-color: transparent;
   border-bottom-color: transparent;
-}
+} */
 
 .round-slider::after {
   content: "";
