@@ -7,8 +7,8 @@ function App() {
   return (
     <div className="App">
       <TestSlider min={20} max={30} />
-      <TestSlider min={100} max={1000} />
-      <TestSlider />
+      <TestSlider min={0} max={2000} />
+      <TestSlider min={0} max={40000} />
       <Slider />
       <CircleValue value={100} />
       <TestSlider />

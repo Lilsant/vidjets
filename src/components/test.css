@@ -1,11 +1,26 @@
+* {
+  box-sizing: border-box;
+}
 .canvas {
   width: 500px;
   height: 500px;
+  position: relative;
   background: #26292d;
   border-radius: 50%;
-  border-right: 2px solid #ffffff;
-  border-left: 2px solid #ffffff;
+  border-right: 3px dotted #ffffff;
+  border-left: 3px dotted #ffffff;
   border-top: 3px solid transparent;
   border-bottom: 3px solid transparent;
   background: transparent;
+  touch-action: none;
+}
+
+.canvas::after {
+  content: "";
+  position: absolute;
+  width: 550px;
+  top: 50%;
+  height: 100px;
+  background-color: red;
+  border: 3px solid red;
 }
