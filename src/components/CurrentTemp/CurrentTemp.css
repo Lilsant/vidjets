@@ -3,9 +3,15 @@
   width: 200px;
   height: 200px;
   padding: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
   position: relative;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   border-radius: 100px;
 }
@@ -17,21 +23,26 @@
   width: 105%;
   height: 105%;
   position: absolute;
+  -webkit-animation: rotation 15s linear infinite;
   animation: rotation 15s linear infinite;
 }
 
 .current-temp__circle-loading-line {
   width: 300px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
   height: 40px;
   position: relative;
   overflow: hidden;
   background-color: transparent;
   margin: 100px auto;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
   border-radius: 10px;
   z-index: 0;
 }
@@ -41,8 +52,14 @@
   height: 100%;
   border: 2px solid #ffffff;
   border-radius: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   position: relative;
   overflow: hidden;
@@ -69,6 +86,20 @@
   opacity: 0.5;
   width: 40%;
   z-index: 0;
+  background: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    from(rgba(49, 121, 157, 0.36738445378151263)),
+    color-stop(19%, rgba(49, 121, 157, 0.6362920168067228)),
+    to(rgba(0, 212, 255, 1))
+  );
+  background: -o-linear-gradient(
+    left,
+    rgba(49, 121, 157, 0.36738445378151263) 0%,
+    rgba(49, 121, 157, 0.6362920168067228) 19%,
+    rgba(0, 212, 255, 1) 100%
+  );
   background: linear-gradient(
     90deg,
     rgba(49, 121, 157, 0.36738445378151263) 0%,
@@ -76,7 +107,6 @@
     rgba(0, 212, 255, 1) 100%
   );
   -webkit-animation: lineAnim 0.9s linear infinite;
-  -moz-animation: lineAnim 0.9s linear infinite;
   animation: lineAnim 0.9s linear infinite;
 }
 
@@ -92,12 +122,44 @@
   z-index: 10;
 }
 
-@keyframes rotation {
+@-webkit-keyframes rotation {
   0% {
+    -webkit-transform: rotate(0deg);
     transform: rotate(0deg);
   }
   100% {
+    -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
+  }
+}
+
+@keyframes rotation {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes lineAnim {
+  0% {
+    width: 100%;
+    left: -100%;
+  }
+  20% {
+    -webkit-transform: scale(1.5);
+    transform: scale(1.5);
+  }
+  95% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  100% {
+    left: 130%;
+    width: 90%;
   }
 }
 
@@ -107,9 +169,11 @@
     left: -100%;
   }
   20% {
+    -webkit-transform: scale(1.5);
     transform: scale(1.5);
   }
   95% {
+    -webkit-transform: scale(1);
     transform: scale(1);
   }
   100% {
