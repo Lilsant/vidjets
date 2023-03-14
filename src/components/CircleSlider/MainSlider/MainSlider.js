@@ -19,7 +19,7 @@ function printCircleShadow(canvas, width, height, dF, dS, rd, piF, piS) {
   canvas.beginPath();
   canvas.globalAlpha = 0.2;
   canvas.setLineDash([dF, dS]);
-  canvas.lineWidth = 4;
+  canvas.lineWidth = width / 160;
   canvas.arc(
     width / 2,
     height / 2,
@@ -32,20 +32,20 @@ function printCircleShadow(canvas, width, height, dF, dS, rd, piF, piS) {
 }
 function printSideShapes(canvas, width, height) {
   canvas.beginPath();
-  canvas.lineWidth = 10;
+  canvas.lineWidth = width / 64;
   canvas.setLineDash([7, 7]);
   canvas.strokeStyle = "#FFFFFF";
   canvas.arc(width / 2, height / 2, width / 2, 0.75 * Math.PI, 1.25 * Math.PI);
   canvas.stroke();
   canvas.closePath();
-  printCircleShadow(canvas, width, height, 6.5, 7.15, 10, 0.75, 1.25);
-  printCircleShadow(canvas, width, height, 6, 7.48, 15, 0.75, 1.25);
-  printCircleShadow(canvas, width, height, 6.5, 7.15, 10, 1.75, 0.25);
-  printCircleShadow(canvas, width, height, 6, 7.48, 15, 1.75, 0.25);
+  printCircleShadow(canvas, width, height, 6.5, 7.15, width / 64, 0.75, 1.25);
+  printCircleShadow(canvas, width, height, 6, 7.48, width / 42, 0.75, 1.25);
+  printCircleShadow(canvas, width, height, 6.5, 7.15, width / 64, 1.75, 0.25);
+  printCircleShadow(canvas, width, height, 6, 7.48, width / 42, 1.75, 0.25);
   canvas.beginPath();
   canvas.globalAlpha = 1;
   canvas.setLineDash([7, 7]);
-  canvas.lineWidth = 10;
+  canvas.lineWidth = width / 64;
   canvas.arc(width / 2, height / 2, width / 2, 1.75 * Math.PI, 0.25 * Math.PI);
   canvas.stroke();
   canvas.setLineDash([]);
@@ -84,10 +84,14 @@ function printValue(canvas, value, width, height) {
   canvas.lineWidth = 5;
   canvas.stroke();
   canvas.beginPath();
-  canvas.font = "80px Montserrat";
+  canvas.font = `${Math.round(width / 8.5)}px Montserrat`;
   canvas.fillStyle = "white";
   canvas.textAlign = "center";
-  canvas.fillText(`${Math.round(value)}°`, width / 2 + 14, height / 2 + 30);
+  canvas.fillText(
+    `${Math.round(value)}°`,
+    width / 2 + width / 48,
+    height / 2 + height / 23
+  );
   canvas.stroke();
 }
 
@@ -106,7 +110,7 @@ function printCirclesBorder(settings, sT) {
       settings.height / 2,
       settings.circleSize +
         (settings.thickness - settings.thickness / 2) +
-        i * 10,
+        i * (settings.width / 64),
       0,
       2 * Math.PI
     );
@@ -118,14 +122,14 @@ function printCirclesBorder(settings, sT) {
 
 function printInnerCircle(settings) {
   settings.ctx.beginPath();
+  settings.ctx.lineWidth = 1;
   settings.ctx.arc(
     settings.width / 2,
     settings.height / 2,
-    settings.circleSize - settings.thickness / 2 - 15,
+    settings.circleSize - settings.thickness / 2 - settings.width / 42,
     0,
     2 * Math.PI
   );
-  settings.ctx.lineWidth = 1;
   settings.ctx.stroke();
   settings.ctx.closePath();
 }
@@ -157,6 +161,7 @@ export default function MainSlider({
           ...stngs,
           width: node.offsetWidth * 2,
           height: node.offsetHeight * 2,
+          thickness: Math.round(node.offsetWidth / 4.85),
           circleSize: Math.round((node.offsetWidth * 2) / 3.3333),
         }));
         node.width = settings.width;

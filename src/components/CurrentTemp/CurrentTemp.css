@@ -181,3 +181,27 @@
     width: 90%;
   }
 }
+
+@media (max-width: 1280px) {
+  .current-temp__circle {
+    width: 188px;
+    height: 188px;
+  }
+  .current-temp__circle-value {
+    font-size: 33px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .current-temp__circle {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+@media (max-width: 768px) {
+  .current-temp__circle {
+    width: 112px;
+    height: 112px;
+  }
+}

@@ -44,3 +44,178 @@
   rotate: 0deg;
   opacity: 0.5;
 }
+
+@media (max-width: 1280px) {
+  .circle-slider__canvas {
+    width: 320px;
+    height: 320px;
+  }
+
+  .circle-slider__clock-wrapper {
+    width: 23.5%;
+  }
+
+  .circle-slider__drops-box {
+    width: 31%;
+    height: 5.5%;
+    left: 35%;
+  }
+  .circle-slider__drops-icon {
+    background-size: cover;
+  }
+}
+
+@media (max-width: 1024px) {
+  .circle-slider__canvas {
+    width: 260px;
+    height: 260px;
+  }
+  .circle-slider__clock-wrapper {
+    font-size: 7px;
+    width: 24%;
+    left: 38.5%;
+    top: 35%;
+  }
+  .circle-slider__clock-title {
+    left: 28%;
+    font-size: 5px;
+  }
+  .circle-slider__drops-box {
+    width: 28%;
+    height: 5%;
+    left: 36.5%;
+  }
+  .circle-slider__drops-icon {
+    background-size: cover;
+  }
+}
+
+@media (max-width: 768px) {
+  .circle-slider__canvas {
+    width: 195px;
+    height: 195px;
+  }
+  .circle-slider__clock-wrapper {
+    font-size: 5px;
+    width: 24%;
+    left: 38%;
+    top: 34%;
+  }
+
+  .circle-slider__clock-dial {
+    margin-left: 3px;
+  }
+  .circle-slider__clock-wrapper::after {
+    width: 2px;
+    height: 2px;
+    right: -18%;
+    top: 36%;
+  }
+  .circle-slider__clock-wrapper::before {
+    width: 2px;
+    height: 2px;
+    left: -18%;
+    top: 36%;
+  }
+  .circle-slider__clock-title {
+    left: 23%;
+    font-size: 4px;
+  }
+  .circle-slider__drops-box {
+    width: 45%;
+    height: 8%;
+    transform: scale(0.65);
+    left: 27.5%;
+    top: 55%;
+  }
+}
+
+@media (max-width: 480px) {
+  .circle-slider__canvas {
+    width: 120px;
+    height: 120px;
+  }
+  .circle-slider__clock-dial {
+    margin-left: 3px;
+  }
+  .circle-slider__clock-wrapper::after {
+    width: 1px;
+    height: 1px;
+    right: -18%;
+    top: 32%;
+  }
+  .circle-slider__clock-wrapper::before {
+    width: 1px;
+    height: 1px;
+    left: -18%;
+    top: 32%;
+  }
+  .circle-slider__clock-wrapper {
+    font-size: 3px;
+    width: 26%;
+    left: 37.5%;
+    top: 34.5%;
+    padding: 1px;
+  }
+  .circle-slider__clock-title {
+    font-size: 2px;
+    padding: 0 4px;
+    bottom: -67%;
+    left: 30%;
+  }
+  .circle-slider__drops-box {
+    width: 70%;
+    height: 12%;
+    transform: scale(0.4);
+    left: 15%;
+    top: 52%;
+  }
+}
+
+@media (max-width: 320px) {
+  .circle-slider__canvas {
+    width: 80px;
+    height: 80px;
+  }
+  .circle-slider__clock-wrapper {
+    font-size: 2px;
+    padding: 0;
+    border-left-width: 0.5px;
+    border-right-width: 0.5px;
+    border-bottom-width: 0.5px;
+    top: 36%;
+    left: 37%;
+  }
+
+  .circle-slider__clock-wrapper::after {
+    width: 0.7px;
+    height: 0.7px;
+    border-width: 0.5px;
+    right: -18%;
+  }
+  .circle-slider__clock-wrapper::before {
+    width: 0.8px;
+    height: 0.8px;
+    border-width: 0.5px;
+    left: -18%;
+    top: 30%;
+  }
+  .circle-slider__clock-dial::before {
+    height: 0.3px;
+  }
+  .circle-slider__clock-dial::after {
+    height: 0.3px;
+  }
+  .circle-slider__clock-title {
+    font-size: 1px;
+    padding: 0 3px;
+  }
+
+  .circle-slider__drops-box {
+    width: 120%;
+    height: 15%;
+    top: 50%;
+    transform: scale(0.25);
+    left: -10%;
+  }
+}
