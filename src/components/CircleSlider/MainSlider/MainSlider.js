@@ -52,6 +52,7 @@ function printSideShapes(canvas, width, height) {
 }
 
 function lineAtAngle(x1, y1, length, angle, canvas, lineSize) {
+  canvas.beginPath();
   canvas.moveTo(x1, y1);
   let radians = angle * (Math.PI / 180);
   let x2 = x1 + Math.cos(radians) * length;
@@ -137,6 +138,7 @@ export default function MainSlider({
 }) {
   const [currentValue, setCurrentValue] = useState(min);
   const [isChecked, setIsChecked] = useState(false);
+
   const [settings, setSettings] = useState({
     ctx: null,
     width: 0,
@@ -177,7 +179,6 @@ export default function MainSlider({
   const degree2Radian = (degrees) => degrees * (Math.PI / 180);
 
   if (settings.ctx != null) {
-    console.log("bro");
     settings.ctx.clearRect(0, 0, settings.width, settings.height);
     settings.ctx.fillStyle = "black";
     let theta = degree2Radian(settings.theta);
@@ -199,8 +200,7 @@ export default function MainSlider({
     const cx =
       settings.width / 2 + Math.cos(theta - 7.85) * settings.circleSize;
     const cy =
-      settings.width / 2 + Math.sin(theta - 7.85) * settings.circleSize;
-    settings.ctx.beginPath();
+      settings.height / 2 + Math.sin(theta - 7.85) * settings.circleSize;
 
     lineAtAngle(cx, cy, 5, settings.theta, settings.ctx, settings.thickness);
     printCirclesBorder(settings, false);
