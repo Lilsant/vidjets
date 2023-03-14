@@ -1,13 +1,12 @@
 import React, { useState, useCallback } from "react";
 import "./test.css";
-import drop from "./iconmonstr-drop-2.svg";
 
 function getResult(theta, step) {
   for (let i = 0; i <= 360; i += step) {
     let preSum = i + step - step / 2;
     if (theta >= preSum && theta <= i + step && theta >= i) {
-      if (i + step >= 360) {
-        return i + step - 0.6;
+      if (i + step >= 359.5) {
+        return 359.4;
       }
       return i + step;
     }
@@ -77,45 +76,58 @@ function printValue(canvas, value, width, height) {
   canvas.lineWidth = 5;
   canvas.stroke();
   canvas.beginPath();
-  canvas.font = "90px Montserrat";
+  canvas.font = "80px Montserrat";
   canvas.fillStyle = "white";
-  canvas.fillText(`${Math.round(value)}°`, width / 2, height / 2 + 30);
   canvas.textAlign = "center";
+  canvas.fillText(`${Math.round(value)}°`, width / 2 + 14, height / 2 + 30);
   canvas.stroke();
 }
 
-function printCirclesBorder(
-  width,
-  height,
-  canvas,
-  circlesCount,
-  thickness,
-  circleSize,
-  sT
-) {
-  for (let i = 0; i < circlesCount; i++) {
-    canvas.beginPath();
-    canvas.setLineDash([7, 7]);
-    canvas.lineWidth = 2;
+function printCirclesBorder(settings, sT) {
+  for (let i = 0; i < settings.circlesCount; i++) {
+    settings.ctx.beginPath();
+    settings.ctx.setLineDash([7, 7]);
+    settings.ctx.lineWidth = 2;
     if (sT) {
-      canvas.globalAlpha = 0.5;
-      canvas.setLineDash([]);
+      settings.ctx.globalAlpha = 0.5;
+      settings.ctx.setLineDash([]);
     }
-    canvas.strokeStyle = "#FFFFFF";
-    canvas.arc(
-      width / 2,
-      height / 2,
-      circleSize + (thickness - thickness / 2) + i * 10,
+    settings.ctx.strokeStyle = "#FFFFFF";
+    settings.ctx.arc(
+      settings.width / 2,
+      settings.height / 2,
+      settings.circleSize +
+        (settings.thickness - settings.thickness / 2) +
+        i * 10,
       0,
       2 * Math.PI
     );
-    canvas.stroke();
-    canvas.setLineDash([]);
-    canvas.globalAlpha = 1;
+    settings.ctx.stroke();
+    settings.ctx.setLineDash([]);
+    settings.ctx.globalAlpha = 1;
   }
 }
 
-export default function TestSlider({ min, max }) {
+function printInnerCircle(settings) {
+  settings.ctx.beginPath();
+  settings.ctx.arc(
+    settings.width / 2,
+    settings.height / 2,
+    settings.circleSize - settings.thickness / 2 - 15,
+    0,
+    2 * Math.PI
+  );
+  settings.ctx.lineWidth = 1;
+  settings.ctx.stroke();
+  settings.ctx.closePath();
+}
+
+export default function TestSlider({
+  min,
+  max,
+  groupAdress,
+  changeCurrentValue,
+}) {
   const [currentValue, setCurrentValue] = useState(min);
   const [isChecked, setIsChecked] = useState(false);
   const [settings, setSettings] = useState({
@@ -126,8 +138,8 @@ export default function TestSlider({ min, max }) {
     thickness: 70,
     circlesCount: 6,
     currentValue: 10,
-    mouseX: null,
-    mouseY: null,
+    mouseX: 0,
+    mouseY: 0,
     gradient: null,
   });
 
@@ -140,7 +152,6 @@ export default function TestSlider({ min, max }) {
           height: node.offsetHeight * 2,
           circleSize: Math.round((node.offsetWidth * 2) / 3.3333),
         }));
-        console.log(settings.width, settings.height, settings.circleSize);
         node.width = settings.width;
         node.height = settings.height;
         let gradient = node
@@ -148,7 +159,6 @@ export default function TestSlider({ min, max }) {
           .createLinearGradient(250, 0, 0, 500);
         gradient.addColorStop(1, "rgba(255,255,255, 1)");
         gradient.addColorStop(0, "rgba(255,255,255, 0)");
-        console.dir(node);
         setSettings((stngs) => ({
           ...stngs,
           ctx: node.getContext("2d"),
@@ -160,7 +170,9 @@ export default function TestSlider({ min, max }) {
   );
 
   const degree2Radian = (degrees) => degrees * (Math.PI / 180);
-  if (settings.ctx != null && isChecked) {
+
+  if (settings.ctx != null) {
+    console.log("bro");
     settings.ctx.clearRect(0, 0, settings.width, settings.height);
     const step = 360 / (max - min);
     settings.ctx.fillStyle = "black";
@@ -169,7 +181,7 @@ export default function TestSlider({ min, max }) {
       settings.mouseX - settings.width / 2 / 2
     );
     let res = getResult(getDegree(theta * (180 / Math.PI)), step);
-    let value = res / step + min;
+    let value = Math.round(res / step + min);
     theta = degree2Radian(res);
     settings.ctx.beginPath();
     settings.ctx.setLineDash([2, 2]);
@@ -192,91 +204,49 @@ export default function TestSlider({ min, max }) {
     settings.ctx.beginPath();
 
     lineAtAngle(cx, cy, 5, res, settings.ctx, settings.thickness);
-
-    printCirclesBorder(
-      settings.width,
-      settings.height,
-      settings.ctx,
-      settings.circlesCount,
-      settings.thickness,
-      settings.circleSize,
-      false
-    );
-    printCirclesBorder(
-      settings.width,
-      settings.height,
-      settings.ctx,
-      settings.circlesCount,
-      settings.thickness,
-      settings.circleSize,
-      true
-    );
-
+    printCirclesBorder(settings, false);
+    printCirclesBorder(settings, true);
     printSideShapes(settings.ctx, settings.width, settings.height);
-    settings.ctx.beginPath();
-    settings.ctx.arc(
-      settings.width / 2,
-      settings.height / 2,
-      settings.circleSize - settings.thickness / 2 - 15,
-      0,
-      2 * Math.PI
-    );
-    // 75;
+    printInnerCircle(settings);
     if (value !== currentValue) setCurrentValue(value);
     printValue(settings.ctx, value, settings.width, settings.height);
   }
   return (
-    <div className="slider__wrapper">
+    <div className="circle-slider__wrapper">
       <canvas
         ref={measuredRef}
-        className="canvas"
+        className="circle-slider__canvas"
         onMouseMove={(e) => {
+          if (!isChecked) return;
           setSettings((stngs) => ({
             ...stngs,
             mouseX: e.nativeEvent.layerX,
             mouseY: e.nativeEvent.layerY,
           }));
-          console.log(e);
         }}
         onTouchMove={(e) => {
-          //   if (!isChecked) return;
           settings.ctx.touchAction = "none";
           setSettings((stngs) => ({
             ...stngs,
             mouseX: e.touches[0].clientX,
             mouseY: Math.abs(e.touches[0].pageY - e.target.offsetTop),
           }));
-          console.log(settings.mouseY);
         }}
         onTouchStart={() => {
           setIsChecked(true);
         }}
         onTouchEnd={() => {
           setIsChecked(false);
+          changeCurrentValue(currentValue);
         }}
         onMouseUp={() => {
           setIsChecked(false);
+          changeCurrentValue(currentValue);
         }}
         onMouseDown={() => {
           setIsChecked(true);
         }}
       ></canvas>
-      <div className="slider__drop-box">
-        <i className="slider__drop-icon"></i>
-        <i className="slider__drop-icon"></i>
-        <i className="slider__drop-icon"></i>
-        <i className="slider__drop-icon"></i>
-        <i className="slider__drop-icon"></i>
-        <i className="slider__drop-icon"></i>
-        <i className="slider__drop-icon"></i>
-        <i className="slider__drop-icon"></i>
-        <i className="slider__drop-icon"></i>
-        <i className="slider__drop-icon"></i>
-        <i className="slider__drop-icon slider__drop-icon--transp"></i>
-        <i className="slider__drop-icon slider__drop-icon--transp"></i>
-        <i className="slider__drop-icon slider__drop-icon--transp"></i>
-        <i className="slider__drop-icon slider__drop-icon--transp"></i>
-      </div>
     </div>
   );
 }

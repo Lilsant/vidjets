@@ -55,7 +55,7 @@
   display: inline-block;
   width: 85%;
   min-height: 85%;
-  border: 3px solid white;
+  border: 2px solid white;
   opacity: 0.8;
   border-radius: 50%;
   z-index: 100;
@@ -71,10 +71,15 @@
   opacity: 0.5;
   width: 40%;
   z-index: 0;
-  background-color: #31799d;
-  -webkit-animation: lineAnim 1s linear infinite;
-  -moz-animation: lineAnim 1s linear infinite;
-  animation: lineAnim 2s linear infinite;
+  background: linear-gradient(
+    90deg,
+    rgba(49, 121, 157, 0.36738445378151263) 0%,
+    rgba(49, 121, 157, 0.6362920168067228) 19%,
+    rgba(0, 212, 255, 1) 100%
+  );
+  -webkit-animation: lineAnim 0.9s linear infinite;
+  -moz-animation: lineAnim 0.9s linear infinite;
+  animation: lineAnim 0.9s linear infinite;
 }
 
 .circle__value {
@@ -83,7 +88,6 @@
   font-size: 30px;
   position: absolute;
   display: inline-block;
-  /* font-family: "Roboto", sans-serif; */
   text-align: center;
   width: 100%;
   z-index: 10;
@@ -100,19 +104,17 @@
 
 @keyframes lineAnim {
   0% {
-    width: 10%;
-    left: 0;
+    width: 100%;
+    left: -100%;
   }
-  5% {
-    width: 20%;
-    left: 5%;
+  20% {
+    transform: scale(1.5);
   }
-  50% {
-    left: 20%;
-    width: 80%;
+  95% {
+    transform: scale(1);
   }
   100% {
-    left: 100%;
-    width: 0%;
+    left: 150%;
+    width: 100%;
   }
 }

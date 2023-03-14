@@ -1,19 +1,12 @@
 import "./App.css";
-import CircleValue from "./components/CircleValue";
-import Slider from "./components/slider_vidjet";
-import TestSlider from "./components/TestSlider";
-import Clock from "./components/Clock";
+import CircleValue from "./components/CurrentTemp/CircleValue";
+import Slider from "./components/CircleSlider/Slider";
 
 function App() {
   return (
     <div className="App">
-      <TestSlider min={0} max={3000} />
-      <TestSlider min={0} max={2000} />
-      <TestSlider min={0} max={40000} />
-      <Slider />
-      <CircleValue value={100} />
-      <TestSlider />
-      <Clock />
+      <Slider min={5} max={30} groupAdress={null} />
+      <CircleValue value={29} groupAdress={null} />
     </div>
   );
 }

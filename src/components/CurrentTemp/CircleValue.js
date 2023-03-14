@@ -1,12 +1,12 @@
 import React from "react";
 import "./circle.css";
 
-export default function CircleValue({ value }) {
+export default function CircleValue({ value, groupAdress }) {
   return (
     <div className="circle">
       <div className="circle__wrapper">
         <div className="circle__loading-line">
-          <span className="circle__value">{value}%</span>
+          <span className="circle__value">{value}°</span>
         </div>
       </div>
     </div>
