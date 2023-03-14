@@ -72,6 +72,13 @@ function getDegree(theta) {
   return theta;
 }
 
+function checkUpdate(mouseX, mouseY, width, height, max, min) {
+  const step = 360 / (max - min);
+  let theta = Math.atan2(mouseY - height / 2 / 2, mouseX - width / 2 / 2);
+  let res = getResult(getDegree(theta * (180 / Math.PI)), step);
+  return res;
+}
+
 function printValue(canvas, value, width, height) {
   canvas.lineWidth = 5;
   canvas.stroke();
@@ -137,8 +144,7 @@ export default function MainSlider({
     circleSize: 0,
     thickness: 70,
     circlesCount: 6,
-    mouseX: 0,
-    mouseY: 0,
+    theta: 10,
     gradient: null,
   });
 
@@ -171,16 +177,11 @@ export default function MainSlider({
   const degree2Radian = (degrees) => degrees * (Math.PI / 180);
 
   if (settings.ctx != null) {
+    console.log("bro");
     settings.ctx.clearRect(0, 0, settings.width, settings.height);
-    const step = 360 / (max - min);
     settings.ctx.fillStyle = "black";
-    let theta = Math.atan2(
-      settings.mouseY - settings.height / 2 / 2,
-      settings.mouseX - settings.width / 2 / 2
-    );
-    let res = getResult(getDegree(theta * (180 / Math.PI)), step);
-    let value = Math.round(res / step + min);
-    theta = degree2Radian(res);
+    let theta = degree2Radian(settings.theta);
+    let value = Math.round(settings.theta / (360 / (max - min)) + min);
     settings.ctx.beginPath();
     settings.ctx.setLineDash([2, 2]);
     settings.ctx.arc(
@@ -201,12 +202,11 @@ export default function MainSlider({
       settings.width / 2 + Math.sin(theta - 7.85) * settings.circleSize;
     settings.ctx.beginPath();
 
-    lineAtAngle(cx, cy, 5, res, settings.ctx, settings.thickness);
+    lineAtAngle(cx, cy, 5, settings.theta, settings.ctx, settings.thickness);
     printCirclesBorder(settings, false);
     printCirclesBorder(settings, true);
     printSideShapes(settings.ctx, settings.width, settings.height);
     printInnerCircle(settings);
-    if (value !== currentValue) setCurrentValue(value);
     printValue(settings.ctx, value, settings.width, settings.height);
   }
   return (
@@ -216,19 +216,42 @@ export default function MainSlider({
         className="circle-slider__canvas"
         onMouseMove={(e) => {
           if (!isChecked) return;
-          setSettings((stngs) => ({
-            ...stngs,
-            mouseX: e.nativeEvent.layerX,
-            mouseY: e.nativeEvent.layerY,
-          }));
+          let res = checkUpdate(
+            e.nativeEvent.layerX,
+            e.nativeEvent.layerY,
+            settings.width,
+            settings.height,
+            max,
+            min
+          );
+          let value = Math.round(res / (360 / (max - min)) + min);
+          if (currentValue !== value) {
+            setCurrentValue(value);
+            setSettings((stngs) => ({
+              ...stngs,
+              theta: res,
+            }));
+          }
         }}
         onTouchMove={(e) => {
-          settings.ctx.touchAction = "none";
-          setSettings((stngs) => ({
-            ...stngs,
-            mouseX: e.touches[0].clientX,
-            mouseY: Math.abs(e.touches[0].pageY - e.target.offsetTop),
-          }));
+          if (!isChecked) return;
+          let rect = e.target.getBoundingClientRect();
+          let res = checkUpdate(
+            e.touches[0].pageX - rect.left,
+            e.touches[0].pageY - rect.top,
+            settings.width,
+            settings.height,
+            max,
+            min
+          );
+          let value = Math.round(res / (360 / (max - min)) + min);
+          if (currentValue !== value) {
+            setCurrentValue(value);
+            setSettings((stngs) => ({
+              ...stngs,
+              theta: res,
+            }));
+          }
         }}
         onTouchStart={() => {
           setIsChecked(true);
