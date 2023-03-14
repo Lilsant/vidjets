@@ -1,12 +1,12 @@
 import "./App.css";
-import CircleValue from "./components/CurrentTemp/CircleValue";
-import Slider from "./components/CircleSlider/Slider";
+import CurrentTemp from "./components/CurrentTemp/CurrentTemp";
+import CircleSlider from "./components/CircleSlider/CircleSlider";
 
 function App() {
   return (
     <div className="App">
-      <Slider min={5} max={30} groupAdress={null} />
-      <CircleValue value={29} groupAdress={null} />
+      <CircleSlider min={5} max={30} groupAdress={null} />
+      <CurrentTemp value={29} groupAdress={null} />
     </div>
   );
 }

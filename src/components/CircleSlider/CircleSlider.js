@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import Clock from "./Clock/Clock";
-import TestSlider from "./MainSlider/TestSlider";
+import MainSlider from "./MainSlider/MainSlider";
+import "./CircleSlider.css";
 
-export default function Slider({ min, max, groupAdress }) {
+export default function CircleSlider({ min, max, groupAdress }) {
   const [currentValue, setCurrentValue] = useState(min);
   const changeCurrentValue = (value) => setCurrentValue(value);
 
@@ -10,7 +11,7 @@ export default function Slider({ min, max, groupAdress }) {
 
   return (
     <div className="circle-slider">
-      <TestSlider
+      <MainSlider
         min={min}
         max={max}
         groupAdress={groupAdress}

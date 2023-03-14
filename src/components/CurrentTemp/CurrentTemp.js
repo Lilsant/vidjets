@@ -1,5 +1,5 @@
 import React from "react";
-import "./circle.css";
+import "./CurrentTemp.css";
 
 export default function CircleValue({ value, groupAdress }) {
   return (

@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import "./test.css";
+import "./MainSlider.css";
 
 function getResult(theta, step) {
   for (let i = 0; i <= 360; i += step) {
@@ -122,7 +122,7 @@ function printInnerCircle(settings) {
   settings.ctx.closePath();
 }
 
-export default function TestSlider({
+export default function MainSlider({
   min,
   max,
   groupAdress,
@@ -137,7 +137,6 @@ export default function TestSlider({
     circleSize: 0,
     thickness: 70,
     circlesCount: 6,
-    currentValue: 10,
     mouseX: 0,
     mouseY: 0,
     gradient: null,
@@ -172,7 +171,6 @@ export default function TestSlider({
   const degree2Radian = (degrees) => degrees * (Math.PI / 180);
 
   if (settings.ctx != null) {
-    console.log("bro");
     settings.ctx.clearRect(0, 0, settings.width, settings.height);
     const step = 360 / (max - min);
     settings.ctx.fillStyle = "black";
