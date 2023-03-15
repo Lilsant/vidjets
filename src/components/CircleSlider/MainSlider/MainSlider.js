@@ -49,6 +49,7 @@ function printSideShapes(canvas, width, height) {
   canvas.arc(width / 2, height / 2, width / 2, 1.75 * Math.PI, 0.25 * Math.PI);
   canvas.stroke();
   canvas.setLineDash([]);
+  canvas.closePath();
 }
 
 function lineAtAngle(x1, y1, length, angle, canvas, lineSize) {
@@ -94,8 +95,7 @@ function checkUpdate(mouseX, mouseY, width, height, max, min) {
 }
 
 function printValue(canvas, value, width, height) {
-  canvas.lineWidth = 5;
-  canvas.stroke();
+  // canvas.stroke();
   canvas.beginPath();
   canvas.font = `${Math.round(width / 8.5)}px Montserrat`;
   canvas.fillStyle = "white";
@@ -106,6 +106,7 @@ function printValue(canvas, value, width, height) {
     height / 2 + height / 23
   );
   canvas.stroke();
+  canvas.closePath();
 }
 
 function printCirclesBorder(settings, sT) {
@@ -130,12 +131,17 @@ function printCirclesBorder(settings, sT) {
     settings.ctx.stroke();
     settings.ctx.setLineDash([]);
     settings.ctx.globalAlpha = 1;
+    settings.ctx.closePath();
   }
 }
 
 function printInnerCircle(settings) {
   settings.ctx.beginPath();
-  settings.ctx.lineWidth = 1;
+
+  settings.ctx.stroke();
+  settings.ctx.fill();
+  settings.ctx.lineWidth = settings.width / 2 / 70;
+  settings.ctx.strokeStyle = "#FFFFFF";
   settings.ctx.arc(
     settings.width / 2,
     settings.height / 2,
@@ -215,17 +221,25 @@ export default function MainSlider({
     settings.ctx.lineWidth = settings.thickness;
     settings.ctx.stroke();
     settings.ctx.setLineDash([]);
+    settings.ctx.closePath();
 
     const cx =
       settings.width / 2 + Math.cos(theta - 7.85) * settings.circleSize;
     const cy =
       settings.height / 2 + Math.sin(theta - 7.85) * settings.circleSize;
 
-    lineAtAngle(cx, cy, 5, settings.theta, settings.ctx, settings.thickness);
+    lineAtAngle(
+      cx,
+      cy,
+      settings.width / 68,
+      settings.theta,
+      settings.ctx,
+      settings.thickness
+    );
+    printInnerCircle(settings);
     printCirclesBorder(settings, false);
     printCirclesBorder(settings, true);
     printSideShapes(settings.ctx, settings.width, settings.height);
-    printInnerCircle(settings);
     printValue(settings.ctx, value, settings.width, settings.height);
   }
   return (

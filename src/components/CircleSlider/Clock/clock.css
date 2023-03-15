@@ -14,10 +14,10 @@
   color: #ffffff;
   position: absolute;
   font-family: "Montserrat", serif;
-  width: 22.5%;
+  width: 24%;
   top: 35%;
   left: 39%;
-  font-size: 9px;
+  font-size: 7px;
   padding: 2px;
   border-bottom: 1px dotted #fff;
   border-right: 1px solid white;
@@ -59,11 +59,11 @@
 .circle-slider__clock-title {
   position: absolute;
   text-transform: uppercase;
-  font-size: 6px;
-  left: 30%;
+  font-size: 5px;
+  left: 27%;
   font-weight: 600;
   padding: 0 7px;
-  bottom: -67%;
+  bottom: -65%;
   color: rgba(0, 0, 0, 0.5);
   background-color: white;
 }
