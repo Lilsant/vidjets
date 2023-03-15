@@ -85,6 +85,16 @@
     height: 5%;
     left: 36.5%;
   }
+
+  .circle-slider__clock-wrapper::after {
+    right: -15%;
+    top: 39.5%;
+  }
+
+  .circle-slider__clock-wrapper::before {
+    left: -15%;
+    top: 40%;
+  }
   .circle-slider__drops-icon {
     background-size: cover;
   }
@@ -139,16 +149,10 @@
     margin-left: 3px;
   }
   .circle-slider__clock-wrapper::after {
-    width: 1px;
-    height: 1px;
-    right: -18%;
-    top: 32%;
+    display: none;
   }
   .circle-slider__clock-wrapper::before {
-    width: 1px;
-    height: 1px;
-    left: -18%;
-    top: 32%;
+    display: none;
   }
   .circle-slider__clock-wrapper {
     font-size: 3px;
