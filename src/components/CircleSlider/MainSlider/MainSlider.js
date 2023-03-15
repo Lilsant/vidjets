@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useLayoutEffect } from "react";
 import "./MainSlider.css";
 
 function getResult(theta, step) {
@@ -61,6 +61,19 @@ function lineAtAngle(x1, y1, length, angle, canvas, lineSize) {
   canvas.strokeStyle = "#31799D";
   canvas.lineTo(x2, y2);
   canvas.stroke();
+}
+
+function useWindowSize() {
+  const [size, setSize] = useState([0, 0]);
+  useLayoutEffect(() => {
+    function updateSize() {
+      setSize([window.innerWidth, window.innerHeight]);
+    }
+    window.addEventListener("resize", updateSize);
+    updateSize();
+    return () => window.removeEventListener("resize", updateSize);
+  }, []);
+  return size;
 }
 
 function getDegree(theta) {
@@ -142,6 +155,7 @@ export default function MainSlider({
 }) {
   const [currentValue, setCurrentValue] = useState(min);
   const [isChecked, setIsChecked] = useState(false);
+  const size = useWindowSize();
 
   const [settings, setSettings] = useState({
     ctx: null,
@@ -164,8 +178,8 @@ export default function MainSlider({
           thickness: Math.round(node.offsetWidth / 4.85),
           circleSize: Math.round((node.offsetWidth * 2) / 3.3333),
         }));
-        node.width = settings.width;
-        node.height = settings.height;
+        node.width = node.offsetWidth * 2;
+        node.height = node.offsetHeight * 2;
         let gradient = node
           .getContext("2d")
           .createLinearGradient(250, 0, 0, 500);
@@ -178,7 +192,7 @@ export default function MainSlider({
         }));
       }
     },
-    [settings.width, settings.height]
+    [size[0], size[1]]
   );
 
   const degree2Radian = (degrees) => degrees * (Math.PI / 180);
