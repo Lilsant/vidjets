@@ -185,7 +185,6 @@ export default function MainSlider({
           thickness: Math.round(node.offsetWidth / 4.85),
           circleSize: Math.round((node.offsetWidth * 2) / 3.3333),
         }));
-        console.log((360 / (max - min)) * currentTemp);
         node.width = node.offsetWidth * 2;
         node.height = node.offsetHeight * 2;
         let gradient = node
@@ -209,7 +208,6 @@ export default function MainSlider({
     settings.ctx.clearRect(0, 0, settings.width, settings.height);
     settings.ctx.fillStyle = "black";
     let theta = degree2Radian(settings.theta);
-    let value = Math.round(settings.theta / (360 / (max - min)) + min);
     settings.ctx.beginPath();
     settings.ctx.setLineDash([2, 2]);
     settings.ctx.arc(
@@ -295,12 +293,12 @@ export default function MainSlider({
           setIsChecked(true);
         }}
         onTouchEnd={() => {
-          changeCurrentValue(currentValue);
           setIsChecked(false);
+          changeCurrentValue(currentValue);
         }}
         onMouseUp={() => {
-          // changeCurrentValue(currentValue);
           setIsChecked(false);
+          changeCurrentValue(currentValue);
         }}
         onMouseDown={() => {
           setIsChecked(true);
