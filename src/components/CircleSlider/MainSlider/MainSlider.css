@@ -102,8 +102,8 @@
   }
   .circle-slider__clock-wrapper {
     font-size: 6px;
-    width: 27%;
-    left: 37%;
+    width: 28%;
+    left: 36%;
     top: 34%;
   }
   .circle-slider__clock-title {
@@ -181,7 +181,7 @@
     height: 152px;
   }
   .circle-slider__clock-wrapper {
-    width: 24%;
+    width: 24.5%;
     left: 38%;
     top: 33%;
     padding: 1px;
@@ -231,6 +231,8 @@
   }
   .circle-slider__clock-wrapper {
     font-size: 3px;
+    width: 26.5%;
+    left: 37%;
   }
 
   .circle-slider__clock-dial {
@@ -259,7 +261,7 @@
   }
   .circle-slider__clock-wrapper {
     font-size: 2.6px;
-    width: 25%;
+    width: 27%;
     left: 37.5%;
     top: 34.5%;
     padding: 0px;

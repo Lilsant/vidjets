@@ -95,7 +95,6 @@ function checkUpdate(mouseX, mouseY, width, height, max, min) {
 }
 
 function printValue(canvas, value, width, height) {
-  // canvas.stroke();
   canvas.beginPath();
   canvas.font = `${Math.round(width / 8.5)}px Montserrat`;
   canvas.fillStyle = "white";
@@ -157,9 +156,11 @@ export default function MainSlider({
   min,
   max,
   groupAdress,
+  currentTemp,
+  nowTemp,
   changeCurrentValue,
 }) {
-  const [currentValue, setCurrentValue] = useState(min);
+  const [currentValue, setCurrentValue] = useState(currentTemp);
   const [isChecked, setIsChecked] = useState(false);
   const size = useWindowSize();
 
@@ -170,7 +171,7 @@ export default function MainSlider({
     circleSize: 0,
     thickness: 70,
     circlesCount: 6,
-    theta: 10,
+    theta: (360 / (max - min)) * currentTemp,
     gradient: null,
   });
 
@@ -184,6 +185,7 @@ export default function MainSlider({
           thickness: Math.round(node.offsetWidth / 4.85),
           circleSize: Math.round((node.offsetWidth * 2) / 3.3333),
         }));
+        console.log((360 / (max - min)) * currentTemp);
         node.width = node.offsetWidth * 2;
         node.height = node.offsetHeight * 2;
         let gradient = node
@@ -198,7 +200,7 @@ export default function MainSlider({
         }));
       }
     },
-    [size[0], size[1]]
+    [size[0]]
   );
 
   const degree2Radian = (degrees) => degrees * (Math.PI / 180);
@@ -240,7 +242,9 @@ export default function MainSlider({
     printCirclesBorder(settings, false);
     printCirclesBorder(settings, true);
     printSideShapes(settings.ctx, settings.width, settings.height);
-    printValue(settings.ctx, value, settings.width, settings.height);
+    isChecked
+      ? printValue(settings.ctx, currentValue, settings.width, settings.height)
+      : printValue(settings.ctx, nowTemp, settings.width, settings.height);
   }
   return (
     <div className="circle-slider__wrapper">
@@ -268,6 +272,7 @@ export default function MainSlider({
         }}
         onTouchMove={(e) => {
           if (!isChecked) return;
+
           let rect = e.target.getBoundingClientRect();
           let res = checkUpdate(
             e.touches[0].pageX - rect.left,
@@ -290,12 +295,12 @@ export default function MainSlider({
           setIsChecked(true);
         }}
         onTouchEnd={() => {
-          setIsChecked(false);
           changeCurrentValue(currentValue);
+          setIsChecked(false);
         }}
         onMouseUp={() => {
+          // changeCurrentValue(currentValue);
           setIsChecked(false);
-          changeCurrentValue(currentValue);
         }}
         onMouseDown={() => {
           setIsChecked(true);

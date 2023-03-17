@@ -3,8 +3,8 @@ import Clock from "./Clock/Clock";
 import MainSlider from "./MainSlider/MainSlider";
 import "./CircleSlider.css";
 
-export default function CircleSlider({ min, max, groupAdress }) {
-  const [currentValue, setCurrentValue] = useState(min);
+export default function CircleSlider({ min, max, currentTemp, groupAdress }) {
+  const [currentValue, setCurrentValue] = useState(currentTemp);
   const changeCurrentValue = (value) => setCurrentValue(value);
 
   console.log(currentValue);
@@ -14,7 +14,9 @@ export default function CircleSlider({ min, max, groupAdress }) {
       <MainSlider
         min={min}
         max={max}
+        currentTemp={currentTemp}
         groupAdress={groupAdress}
+        nowTemp={currentValue}
         changeCurrentValue={changeCurrentValue}
       />
       <Clock />
